@@ -7,9 +7,9 @@ if (!isset($_SESSION['admin_logged_in'])) {
 require_once '../config.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
-$page_title = 'Informasi Kegiatan';
-if ($action == 'tambah') $page_title = 'Tambah Informasi Kegiatan';
-if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
+$page_title = 'Fasilitas Dusun';
+if ($action == 'tambah') $page_title = 'Tambah Fasilitas';
+if ($action == 'edit') $page_title = 'Edit Fasilitas';
 
 ?>
 <!DOCTYPE html>
@@ -17,14 +17,14 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Informasi Kegiatan</title>
+    <title>Admin Dashboard - Fasilitas Dusun</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --sidebar-bg: #bfd5a3; /* Updated to match image light green */
+            --sidebar-bg: #bfd5a3;
             --main-bg: #fff;
-            --text-dark: #223f20; /* Dark green text */
+            --text-dark: #223f20;
             --input-bg: #dce5ce;
             --btn-green: #032b13;
         }
@@ -35,7 +35,7 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
         /* Sidebar */
         .sidebar {
             width: 220px;
-            background: #bacc98; /* Exact matched olive green */
+            background: #bacc98;
             padding: 25px 0;
             display: flex;
             flex-direction: column;
@@ -105,10 +105,6 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
         .submenu li a:hover:not(.active) {
             background: rgba(255,255,255,0.15);
         }
-        .submenu li a i {
-            font-size: 6px;
-            width: 16px;
-        }
 
         .sidebar-footer-menu { list-style: none; margin-top: auto; padding-bottom: 15px; }
         .sidebar-footer-menu li { margin-bottom: 2px; padding-left: 15px; }
@@ -129,9 +125,7 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
 
         /* Topbar */
         .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .search-container {
-            position: relative; width: 100%; max-width: 600px;
-        }
+        .search-container { position: relative; width: 100%; max-width: 600px; }
         .search-container i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #4e6353; font-size: 18px; }
         .search-bar {
             width: 100%; background: #e0ddd8; padding: 15px 20px 15px 50px;
@@ -149,18 +143,15 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
         h1.page-title { font-size: 28px; font-weight: 900; color: #072210; letter-spacing: -0.5px; margin-bottom: 0; }
 
         /* Cards Grid */
-        .cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 20px;}
-        .info-card { background: #dce5ce; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.03);}
+        .cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 20px; }
+        .info-card { background: #dce5ce; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
         .card-img { position: relative; height: 180px; width: 100%; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
         .card-badge-left { position: absolute; top: 15px; left: 15px; background: white; color: #28442a; font-size: 10px; font-weight: 800; padding: 4px 12px; border-radius: 50px; }
         
         .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
         .card-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .meta-date { color: #53775b; font-size: 11px; font-weight: 800; line-height: 1.3;}
-        .meta-status { font-size: 9px; font-weight: 800; padding: 3px 10px; border-radius: 50px; color: white; }
-        .bg-orange { background: #f58400; }
-        .bg-green { background: #49634b; }
+        .meta-unit { color: #53775b; font-size: 12px; font-weight: 800; }
         
         .info-card h3 { font-size: 18px; font-weight: 800; color: #0d2a14; margin-bottom: 12px; line-height: 1.3; }
         .info-card p { font-size: 12px; color: #526f58; font-weight: 500; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
@@ -169,9 +160,9 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
         .btn-card { flex: 1; padding: 10px; text-align: center; font-size: 12px; font-weight: 700; border-radius: 10px; cursor: pointer; border: none; transition: 0.3s; }
         .btn-edit { background: white; color: #0b2512; border: 2px solid #0b2512; }
         .btn-delete { background: #032b13; color: white; }
-        .btn-card:hover { opacity: 0.8; transform: translateY(-2px);}
+        .btn-card:hover { opacity: 0.8; transform: translateY(-2px); }
 
-        /* Buttons & Utility */
+        /* Buttons */
         .btn-add { background: #dce5ce; color: #0e2914; border: none; padding: 12px 24px; border-radius: 50px; font-weight: 800; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; text-decoration: none; }
         .btn-add:hover { background: #c5d3af; }
         
@@ -180,31 +171,28 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
         /* Form Area */
         .form-table { width: 100%; border-collapse: separate; border-spacing: 0 20px; }
         .form-table td { vertical-align: top; }
-        .form-table td.label-col { width: 140px; font-size: 15px; font-weight: 800; color: #0b2512; padding-top: 15px; }
+        .form-table td.label-col { width: 180px; font-size: 15px; font-weight: 800; color: #0b2512; padding-top: 15px; }
         .form-table td.colon-col { width: 20px; font-size: 16px; font-weight: 800; color: #0b2512; padding-top: 15px; text-align: center; }
         
         .input-box { background: var(--input-bg); border: none; padding: 15px 20px; border-radius: 12px; width: 100%; font-size: 14px; color: #0b2512; font-weight: 600; outline: none; }
-        .input-box.w-auto { width: auto; min-width: 200px; display: inline-block;}
+        .input-box.w-auto { width: auto; min-width: 200px; display: inline-block; }
         textarea.input-box { min-height: 100px; resize: none; }
         .img-placeholder { width: 100%; height: 200px; background: var(--input-bg); border-radius: 12px; }
-        
-        .pill-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-        .form-pill { background: #dce5ce; color: #43644a; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; }
-        .form-pill.active { background: #a6b98b; color: #0b2512; }
 
         .submit-wrap { text-align: center; margin-top: 40px; margin-bottom: 60px; }
-        .btn-submit { background: #032b13; color: white; padding: 14px 40px; border-radius: 10px; font-weight: 700; font-size: 15px; border: none; cursor: pointer; transition: 0.3s;}
-        .btn-submit:hover { background: #083c1d; transform: translateY(-2px);}
+        .btn-submit { background: #032b13; color: white; padding: 14px 40px; border-radius: 10px; font-weight: 700; font-size: 15px; border: none; cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { background: #083c1d; transform: translateY(-2px); }
 
-        .pagination { display: flex; justify-content: flex-end; gap: 5px; }
-        .page-btn { background: #dce5ce; color: #37543f; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; border-radius: 6px; cursor: pointer; border: none; }
-        .page-btn.active { background: #c5d3af; }
-
-        .btn-kembali { background: #032b13; color: white; display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-size: 13px; font-weight: 600; margin-bottom: 20px;}
-        .btn-kembali i { margin-right: 8px; font-size: 10px;}
+        .btn-kembali { background: #032b13; color: white; display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+        .btn-kembali i { margin-right: 8px; font-size: 10px; }
 
         
         
+
+        /* Empty State */
+        .empty-state { text-align: center; padding: 60px 20px; color: #7f8c82; }
+        .empty-state i { font-size: 48px; margin-bottom: 15px; color: #c5d3af; }
+        .empty-state p { font-size: 15px; font-weight: 600; }
     
         /* Special style for Logout menu item */
         .sidebar-footer-menu li a[onclick*='showLogoutModal'] {
@@ -313,27 +301,22 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
             <h2>Hallo Admin</h2>
             <div class="profile">
                 <img src="../assets/<?php echo $_SESSION['admin_foto'] ?? 'placeholder.jpg'; ?>" alt="Profile">
-          <div class="profile-info">
-    <span class="name" style="font-weight: bold;">
-        <?php 
-            $name_parts = explode(' ', $_SESSION['admin_name'] ?? 'Admin User');
-            echo htmlspecialchars($name_parts[0]); 
-        ?>
-    </span>
-
-    <span class="role" style="font-weight: bold;">
-        <?php 
-            echo htmlspecialchars(implode(' ', array_slice($name_parts,1))); 
-        ?>
-    </span>
-</div>
+                <div class="profile-info">
+                    <span class="name" style="font-weight: bold;"><?php 
+                        $name_parts = explode(' ', $_SESSION['admin_name'] ?? 'Admin User');
+                        echo htmlspecialchars($name_parts[0]); 
+                    ?></span>
+                    <span class="role" style="font-weight: bold;"><?php 
+                        echo htmlspecialchars(implode(' ', array_slice($name_parts, 1))); 
+                    ?></span>
+                </div>
             </div>
         </div>
         
         <ul class="menu">
             <li><a href="index.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li><a href="index.php?action=list" class="<?php echo ($action == 'list' || $action == 'tambah' || $action == 'edit') ? 'active' : ''; ?>"><i class="fas fa-newspaper"></i> Informasi Kegiatan</a></li>
-            <li><a href="fasilitas.php"><i class="fas fa-building"></i> Fasilitas Dusun</a></li>
+            <li><a href="index.php?action=list"><i class="fas fa-newspaper"></i> Informasi Kegiatan</a></li>
+            <li><a href="fasilitas.php" class="active"><i class="fas fa-building"></i> Fasilitas Dusun</a></li>
             <li><a href="bisnis.php"><i class="fas fa-briefcase"></i> Bisnis Warga</a></li>
             <li><a href="nasabah.php"><i class="fas fa-users"></i> Nasabah</a></li>
             <li><a href="transaksi.php"><i class="fas fa-exchange-alt"></i> Transaksi BSP</a></li>
@@ -341,9 +324,9 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
             <li><a href="pengaduan.php"><i class="fas fa-bullhorn"></i> Pengaduan</a></li>
         </ul>
         
-        <ul class="sidebar-footer-menu menu" style="margin-top: auto; padding-bottom: 20px;">
+        <ul class="sidebar-footer-menu menu">
             <li><a href="pengaturan.php"><i class="fas fa-cog"></i> Pengaturan</a></li>
-            <li><a href="javascript:void(0)" onclick="showLogoutModalFinal()" class="logout-sidebar-link"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+            <li><a href="#" onclick="showLogoutModalFinal()"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
         </ul>
     </div>
 
@@ -354,7 +337,7 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
         <div class="topbar">
             <div class="search-container">
                 <i class="fas fa-search"></i>
-                <input type="text" class="search-bar" placeholder="Cari">
+                <input type="text" class="search-bar" placeholder="Cari fasilitas...">
             </div>
             <div class="top-icons">
                 <div class="bell-wrap">
@@ -366,53 +349,45 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
         </div>
 
         <?php if ($action == 'list'): ?>
-        <!-- Section: Informasi Kegiatan -->
+        <!-- Section: Fasilitas Dusun List -->
         <div class="section-box">
             <div class="section-header">
-                <h1 class="page-title">Informasi Kegiatan</h1>
-                <a href="?action=tambah" class="btn-add" style="text-decoration:none;"><i class="fas fa-plus"></i> Tambah Informasi</a>
+                <h1 class="page-title">Fasilitas Dusun</h1>
+                <a href="?action=tambah" class="btn-add" style="text-decoration:none;"><i class="fas fa-plus"></i> Tambah Fasilitas</a>
             </div>
             
             <div class="cards-row">
                 <?php
-                $q = mysqli_query($conn, "SELECT * FROM t_kegiatan_dusun ORDER BY tanggal DESC");
-                if(mysqli_num_rows($q) > 0) {
-                    while($k = mysqli_fetch_array($q)) {
-                        $tanggal = date('d M Y', strtotime($k['tanggal']));
-                        $waktu_mulai = !empty($k['waktu_mulai']) ? date('H.i', strtotime($k['waktu_mulai'])) : '00.00';
-                        $waktu_selesai = !empty($k['waktu_selesai']) ? date('H.i', strtotime($k['waktu_selesai'])) : '00.00';
-                        $waktu = $waktu_mulai . '-' . $waktu_selesai;
-                        $status_class = 'bg-green';
-                        if($k['status'] == 'akan_datang') $status_class = 'bg-orange';
+                $q = mysqli_query($conn, "SELECT * FROM t_fasilitas_dusun ORDER BY created_at DESC");
+                if($q && mysqli_num_rows($q) > 0) {
+                    while($f = mysqli_fetch_array($q)) {
+                        $unit_text = $f['unit'] ? $f['unit'] . ' Unit' : '-';
                         
                         echo '<div class="info-card">';
                         echo '  <div class="card-img">';
-                        echo '      <span class="card-badge-left">'.htmlspecialchars($k['jenis_kegiatan']).'</span>';
-                        echo '      <img src="../assets/'.($k['foto']?$k['foto']:'placeholder.jpg').'" alt="Foto">';
+                        if($f['penanggung_jawab']) {
+                            echo '      <span class="card-badge-left">PJ: '.htmlspecialchars($f['penanggung_jawab']).'</span>';
+                        }
+                        echo '      <img src="../assets/'.($f['foto']?$f['foto']:'placeholder.jpg').'" alt="Foto" onerror="this.src=\'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80\'">';
                         echo '  </div>';
                         echo '  <div class="card-body">';
                         echo '      <div class="card-meta">';
-                        echo '          <span class="meta-date">'.$tanggal.'<br><span style="font-size: 9px;">'.$waktu.'</span></span>';
-                        echo '          <span class="meta-status '.$status_class.'">'.ucfirst(str_replace('_', ' ', $k['status'])).'</span>';
+                        echo '          <span class="meta-unit"><i class="fas fa-building" style="margin-right:5px;"></i> '.$unit_text.'</span>';
                         echo '      </div>';
-                        echo '      <h3>'.htmlspecialchars($k['judul']).'</h3>';
-                        echo '      <p>'.htmlspecialchars(substr($k['keterangan'], 0, 150)).'...</p>';
+                        echo '      <h3>'.htmlspecialchars($f['nama_fasilitas']).'</h3>';
+                        echo '      <p>'.htmlspecialchars(substr($f['keterangan'] ?: 'Tidak ada keterangan.', 0, 150)).'</p>';
                         echo '      <div class="card-actions">';
-                        echo '          <a href="?action=edit&id='.$k['id_kegiatan'].'" class="btn-card btn-edit" style="text-decoration:none;">Edit Kegiatan</a>';
-                        echo '          <a href="proses_kegiatan.php?act=del&id='.$k['id_kegiatan'].'" class="btn-card btn-delete" style="text-decoration:none;" onclick="return confirm(\'Hapus kegiatan?\')">Hapus Kegiatan</a>';
+                        echo '          <a href="?action=edit&id='.$f['id_fasilitas'].'" class="btn-card btn-edit" style="text-decoration:none;">Edit Fasilitas</a>';
+                        echo '          <a href="proses_fasilitas.php?act=del&id='.$f['id_fasilitas'].'" class="btn-card btn-delete" style="text-decoration:none;" onclick="return confirm(\'Hapus fasilitas ini?\')">Hapus Fasilitas</a>';
                         echo '      </div>';
                         echo '  </div>';
                         echo '</div>';
                     }
                 } else {
-                    echo '<p>Belum ada kegiatan.</p>';
+                    echo '<div class="empty-state" style="grid-column: 1/-1;"><i class="fas fa-building"></i><p>Belum ada data fasilitas.</p></div>';
                 }
                 ?>
             </div>
-            
-            <?php if(mysqli_num_rows($q) > 2): ?>
-            <a href="#" class="lihat-semua">Lihat semua ></a>
-            <?php endif; ?>
         </div>
         <?php else: ?>
         
@@ -420,18 +395,18 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
         $id = isset($_GET['id']) ? $_GET['id'] : '';
         $edit = null;
         if($action == 'edit' && $id) {
-            $q_edit = mysqli_query($conn, "SELECT * FROM t_kegiatan_dusun WHERE id_kegiatan='$id'");
+            $q_edit = mysqli_query($conn, "SELECT * FROM t_fasilitas_dusun WHERE id_fasilitas='$id'");
             $edit = mysqli_fetch_array($q_edit);
         }
         ?>
-        <!-- Section: Tambah/Edit Informasi Kegiatan Form -->
+        <!-- Section: Tambah/Edit Fasilitas Form -->
         <div class="section-box">
             <a href="?action=list" class="btn-kembali"><i class="fas fa-chevron-left"></i> Kembali</a>
             <div style="text-align: center; margin-bottom: 40px; margin-top:20px;">
-                <h1 class="page-title" style="margin-bottom:0;"><?php echo $action == 'edit' ? 'Edit ' : 'Tambah '; ?>Informasi Kegiatan</h1>
+                <h1 class="page-title" style="margin-bottom:0;"><?php echo $action == 'edit' ? 'Edit ' : 'Tambah '; ?>Fasilitas Dusun</h1>
             </div>
             
-            <form action="proses_kegiatan.php?act=<?php echo $action == 'edit' ? 'edit' : 'add'; ?>" method="POST" enctype="multipart/form-data">
+            <form action="proses_fasilitas.php?act=<?php echo $action == 'edit' ? 'edit' : 'add'; ?>" method="POST" enctype="multipart/form-data">
                 <?php if($action == 'edit'): ?>
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <input type="hidden" name="foto_lama" value="<?php echo $edit['foto']; ?>">
@@ -439,9 +414,9 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
 
                 <table class="form-table">
                     <tr>
-                        <td class="label-col">Judul</td>
+                        <td class="label-col">Nama Fasilitas</td>
                         <td class="colon-col">:</td>
-                        <td><input type="text" name="judul" class="input-box" value="<?php echo $edit ? $edit['judul'] : ''; ?>" required></td>
+                        <td><input type="text" name="nama_fasilitas" class="input-box" placeholder="Masukkan nama fasilitas" value="<?php echo $edit ? htmlspecialchars($edit['nama_fasilitas']) : ''; ?>" required></td>
                     </tr>
                     <tr>
                         <td class="label-col">Foto</td>
@@ -458,92 +433,26 @@ if ($action == 'edit') $page_title = 'Edit Informasi Kegiatan';
                         </td>
                     </tr>
                     <tr>
+                        <td class="label-col">Jumlah Unit</td>
+                        <td class="colon-col">:</td>
+                        <td><input type="number" name="unit" class="input-box w-auto" placeholder="Contoh: 1" min="0" value="<?php echo $edit ? $edit['unit'] : ''; ?>"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Penanggung Jawab</td>
+                        <td class="colon-col">:</td>
+                        <td><input type="text" name="penanggung_jawab" class="input-box" placeholder="Nama penanggung jawab" value="<?php echo $edit ? htmlspecialchars($edit['penanggung_jawab']) : ''; ?>"></td>
+                    </tr>
+                    <tr>
                         <td class="label-col">Keterangan</td>
                         <td class="colon-col">:</td>
-                        <td><textarea name="keterangan" class="input-box" required><?php echo $edit ? $edit['keterangan'] : ''; ?></textarea></td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Tanggal</td>
-                        <td class="colon-col">:</td>
-                        <td><input type="date" name="tanggal" class="input-box w-auto" value="<?php echo $edit ? $edit['tanggal'] : ''; ?>" required></td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Lokasi</td>
-                        <td class="colon-col">:</td>
-                        <td><input type="text" name="lokasi" class="input-box" value="<?php echo $edit ? $edit['lokasi'] : ''; ?>" required></td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Penyelenggara</td>
-                        <td class="colon-col">:</td>
-                        <td><input type="text" name="penyelenggara" class="input-box" style="width: 60%;" value="<?php echo $edit ? $edit['penyelenggara'] : ''; ?>" required></td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Waktu mulai</td>
-                        <td class="colon-col">:</td>
-                        <td><input type="time" name="waktu_mulai" class="input-box w-auto" value="<?php echo $edit ? date('H:i', strtotime($edit['waktu_mulai'])) : ''; ?>" required></td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Waktu selesai</td>
-                        <td class="colon-col">:</td>
-                        <td><input type="time" name="waktu_selesai" class="input-box w-auto" value="<?php echo $edit ? date('H:i', strtotime($edit['waktu_selesai'])) : ''; ?>" required></td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Jenis Kegiatan</td>
-                        <td class="colon-col">:</td>
-                        <td>
-                            <div class="pill-group">
-                                <?php 
-                                $jenis = ['Berita dusun', 'Kegiatan warga', 'Pengumuman', 'Agenda dusun', 'Potensi dusun'];
-                                $sel_jenis = $edit ? $edit['jenis_kegiatan'] : 'Berita dusun';
-                                foreach($jenis as $j) {
-                                    $active = ($sel_jenis == $j) ? 'active' : '';
-                                    echo '<button type="button" class="form-pill btn-jenis '.$active.'" data-val="'.$j.'">'.$j.'</button>';
-                                }
-                                ?>
-                                <input type="hidden" name="jenis_kegiatan" id="jenis_kegiatan" value="<?php echo $sel_jenis; ?>">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Status</td>
-                        <td class="colon-col">:</td>
-                        <td>
-                            <div class="pill-group">
-                                <?php 
-                                $status_arr = ['akan_datang'=>'Akan datang', 'dimulai'=>'Dimulai', 'ditunda'=>'Ditunda', 'selesai'=>'Selesai', 'dibatalkan'=>'Dibatalkan'];
-                                $sel_status = $edit ? $edit['status'] : 'akan_datang';
-                                foreach($status_arr as $val => $lbl) {
-                                    $active = ($sel_status == $val) ? 'active' : '';
-                                    echo '<button type="button" class="form-pill btn-status '.$active.'" data-val="'.$val.'">'.$lbl.'</button>';
-                                }
-                                ?>
-                                <input type="hidden" name="status" id="status" value="<?php echo $sel_status; ?>">
-                            </div>
-                        </td>
+                        <td><textarea name="keterangan" class="input-box" placeholder="Deskripsi fasilitas"><?php echo $edit ? htmlspecialchars($edit['keterangan']) : ''; ?></textarea></td>
                     </tr>
                 </table>
 
                 <div class="submit-wrap">
-                    <button type="submit" class="btn-submit"><?php echo $action == 'edit' ? 'Simpan' : 'Tambah'; ?> Kegiatan</button>
+                    <button type="submit" class="btn-submit"><?php echo $action == 'edit' ? 'Simpan' : 'Tambah'; ?> Fasilitas</button>
                 </div>
             </form>
-            
-            <script>
-                document.querySelectorAll('.btn-jenis').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        document.querySelectorAll('.btn-jenis').forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                        document.getElementById('jenis_kegiatan').value = this.getAttribute('data-val');
-                    });
-                });
-                document.querySelectorAll('.btn-status').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        document.querySelectorAll('.btn-status').forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                        document.getElementById('status').value = this.getAttribute('data-val');
-                    });
-                });
-            </script>
         </div>
         <?php endif; ?>
 

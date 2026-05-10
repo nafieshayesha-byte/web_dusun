@@ -74,7 +74,7 @@ $jam_pelaksanaan = $waktu_mulai . ' - ' . $waktu_selesai;
 
     <div class="detail-container">
         <div class="breadcrumb">
-            <a href="index.php">Beranda</a> &rsaquo; <a href="index.php#informasi">Informasi</a> &rsaquo; <span style="color:#0b3018;">Baca Artikel</span>
+            <a href="index.php">Beranda</a> &rsaquo; <a href="informasi_kegiatan.php#informasi">Informasi</a> &rsaquo; <span style="color:#0b3018;">Baca Artikel</span>
         </div>
         
         <div class="detail-badge"><?= htmlspecialchars($k['jenis_kegiatan']) ?></div>
@@ -116,19 +116,59 @@ $jam_pelaksanaan = $waktu_mulai . ' - ' . $waktu_selesai;
         </div>
         
         <div class="nav-footer-spacer">
-            <a href="index.php">&lsaquo; Eksplorasi Web Desa</a>
+            <a href="informasi_kegiatan.php">&lsaquo; Eksplorasi Web Desa</a>
         </div>
     </div>
     
     <footer style="margin-top: 0;">
         <div class="footer-grid">
-            <div class="footer-col">
-                <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 20px;">
-                    <img src="https://ui-avatars.com/api/?name=DP&background=fff&color=1E3B20&rounded=true" style="height: 40px; width:40px; border-radius:50%;" alt="Logo">
-                    <h3 style="margin-bottom:0; color:#fff;">Dusun Pilang</h3>
+            <div class="footer-col" style="flex: 2; min-width: 300px;">
+                <a href="#" class="logo" style="color: var(--white); margin-bottom: 15px; display: inline-flex;"><img src="https://ui-avatars.com/api/?name=DP&background=fff&color=1E3B20&rounded=true" alt="Logo" style="height: 32px; width: 32px; border-radius: 50%;"> Dusun Pilang</a>
+                <p style="margin-top: 5px; max-width: 280px;">Mewujudkan masyarakat yang mandiri, berkarakter, dan sejahtera</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
                 </div>
-                <p>Mewujudkan masyarakat yang mandiri, berkarakter, dan sejahtera.</p>
             </div>
+            <div class="footer-col">
+                <h3>MENU UTAMA</h3>
+                <ul>
+                    <li><a href="index.php">• Beranda</a></li>
+                    <li><a href="tentang_dusun.php">• Tentang Dusun</a></li>
+                    <li><a href="informasi_kegiatan.php">• Informasi Kegiatan</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>LAYANAN</h3>
+                <ul>
+                    <li><a href="bisnis_warga.php">• Bisnis Warga</a></li>
+                    <li><a href="bank_sampah.php">• Bank Sampah</a></li>
+                    <li><a href="admin/login.php">• Pendaftaran Nasabah</a></li>
+                    <li><a href="index.php#kontak">• Pengaduan Publik</a></li>
+                    <li><a href="index.php#kontak">• Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>INFORMASI KONTAK</h3>
+                <ul style="color: #a1a1aa;">
+                    <li style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <i class="fas fa-map-marker-alt" style="margin-top: 5px; color: var(--primary-color);"></i> 
+                        <span><b>ALAMAT UTAMA</b><br>Dusun Pilang RW 06, Kecamatan Boja, Kabupaten Kendal, Provinsi Jawa Tengah, Kode Pos 51381.</span>
+                    </li>
+                    <li style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <i class="fas fa-phone-alt" style="margin-top: 5px; color: var(--primary-color);"></i> 
+                        <span><b>TELEPON</b><br>(082) 1234567</span>
+                    </li>
+                    <li style="display: flex; gap: 10px;">
+                        <i class="fas fa-envelope" style="margin-top: 5px; color: var(--primary-color);"></i> 
+                        <span><b>EMAIL RESMI</b><br>dusunpilang06@gmail.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; padding-top: 20px;">
+            <p>&copy; 2026 Dusun Pilang</p>
+            <a href="admin/login.php" style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; transition: all 0.3s; padding: 6px 12px; border-radius: 50px; background: rgba(0,0,0,0.2);"><i class="fas fa-lock" style="font-size: 10px; margin-right: 5px;"></i> Login Admin</a>
         </div>
     </footer>
 </body>
